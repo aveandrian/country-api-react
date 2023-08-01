@@ -48,6 +48,46 @@ main {
 .main-content {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr;
   column-gap: 5vw;
   row-gap: 10vh;
+}
+
+.search-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  /* border: 1px solid grey; */
+  height: 50px;;
+  padding-inline: 20px;
+  width: 30vw;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
+}
+
+.search-input {
+  width: 100%;
+  border: none;
+}
+
+.search-input:focus {
+  outline: none;
+}
+
+.filter-wrapper {
+  height: 50px;
+  width: 10vw;
+  padding-inline: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
+}
+
+.filter-wrapper select {
+  border: none;
+  height: 100%;
+  width: 100%;
+}
+
+.filter-wrapper select:focus {
+  outline: none;
 }
