@@ -12,6 +12,10 @@ function App() {
     <>
       <header>
         <Link to={'/'}className='title' >Where in the world?</Link>
+        <div className="attribution">
+          Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+          Coded by <a href="https://github.com/aveandrian">aveandrian</a>.
+        </div>
         <button className='theme-switcher' onClick={toggleColorMode}>
           <FontAwesomeIcon icon={colorMode === "light" ? faMoonRegular : faMoonSolid} />
           <h1 className='theme-switcher-title'>Dark Mode</h1>

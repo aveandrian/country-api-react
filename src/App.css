@@ -82,6 +82,9 @@ main {
 }
 
 @media screen and (max-width: 72rem) {
+  .attribution {
+    display: none;
+  }
   p, input {
     font-size: .8rem;
   }
