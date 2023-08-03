@@ -23,4 +23,4 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+![image](https://github.com/aveandrian/country-api-react/assets/13519212/0ff6b19a-7d82-474a-95ba-baca1e5bb482)
