@@ -1,11 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider  } from '@chakra-ui/react'
 import App from './App.jsx'
 import Home from './pages/Home.jsx';
 import Country from './pages/Country.jsx';
 import { loader as CountryLoader } from './pages/Country.jsx';
-import { loader as HomeLoader } from './pages/Home.jsx';
 
 import {
   createBrowserRouter,

@@ -1,0 +1,31 @@
+
+.country-borders {
+    display: flex;
+    align-items: start;
+    gap: 0.938rem ;
+  }
+  
+  .country-borders-title {
+    font-weight: 800;
+    min-width: fit-content;
+  }
+  
+  .country-borders-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.938rem ;
+  }
+  
+  .border-item {
+    width: fit-content;
+    box-shadow: 0 0.125rem  0.313rem  0.125rem  rgba(0, 0, 0, 0.05);
+    padding: 0.313rem  0.938rem ;
+    border-radius: 0.313rem ;
+    border: 0.063rem  solid transparent;
+    background: var(--elements);
+  }
+  
+  .border-item:hover {
+    cursor: pointer;
+    border: 0.063rem  solid rgba(0, 0, 0, 0.2);
+  }

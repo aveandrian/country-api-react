@@ -4,6 +4,7 @@ import { faChevronDown, faClose, faMagnifyingGlass } from '@fortawesome/free-sol
 import { useEffect, useState } from 'react'
 import { useLoaderData, Link } from 'react-router-dom'
 import { Spinner } from '@chakra-ui/react'
+import '../styles/HomePage.css'
 
 const regionsData = {
     africa: "Africa",
@@ -114,7 +115,7 @@ export default function Home(){
                         )}
                     </div>
                 }
-                {isLoading && <Spinner className='spinner' thickness='2px'
+                {isLoading && <Spinner className='spinner' thickness='0.125rem'
                     speed='0.8s'
                     size='md'/>}
             </div>
@@ -133,7 +134,7 @@ export default function Home(){
             <div className='main-content'>
                 {   
                     !countriesData || isCountriesLoading 
-                    ? <div className='loader-wrapper'><p>Countries loading....</p><Spinner thickness='2px'
+                    ? <div className='loader-wrapper'><p>Countries loading....</p><Spinner thickness='0.125rem'
                     speed='0.8s'
                     size='md' /></div>
                     : countriesData.map((countryData, i) => <CountryCard key={i} {...countryData}/>)

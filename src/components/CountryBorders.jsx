@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { Spinner } from "@chakra-ui/react"
+import '../styles/CountryBorders.css'
 
 export default function CountryBorders({borders}){
     const [isLoading, setIsLoading] = useState(false)
@@ -26,7 +28,7 @@ export default function CountryBorders({borders}){
             <p className="country-borders-title">Border Countries:</p>
             <div className="country-borders-container">
                 {isLoading 
-                ? <p>Loading borders...</p> 
+                ? <Spinner className='spinner' thickness='0.125rem' speed='0.8s' size='md'/>
                 : bordersNames.map((border, i) => <Link key={i} to={"../"+borders[i]} className="border-item">{border}</Link>)
                 } 
             </div>
