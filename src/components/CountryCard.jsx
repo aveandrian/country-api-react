@@ -15,7 +15,7 @@ export default function CountryCard(props){
                 <div className="country-stats">
                 <div className="country-stat-item">
                     <p className="country-stat-item-title">Population:</p>
-                    <p className="country-stat-item-value">{props.population}</p>
+                    <p className="country-stat-item-value">{props.population.toLocaleString()}</p>
                 </div>
                 <div className="country-stat-item">
                     <p className="country-stat-item-title">Region:</p>

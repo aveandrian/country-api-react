@@ -5,6 +5,7 @@ import App from './App.jsx'
 import Home from './pages/Home.jsx';
 import Country from './pages/Country.jsx';
 import { loader as CountryLoader } from './pages/Country.jsx';
+import { loader as HomeLoader } from './pages/Home.jsx';
 
 import {
   createBrowserRouter,
@@ -18,10 +19,10 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <Home />
       },
       {
-        path: "/:countryName",
+        path: ":countryName",
         element: <Country />,
         loader: CountryLoader
       },

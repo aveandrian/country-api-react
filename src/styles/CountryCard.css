@@ -30,15 +30,16 @@
 }
 
 .country-name {
+    font-weight: 800;
     font-size: 1.2rem;
 }
 
 .country-stat-item {
     display: flex;
-    align-items: last baseline;
+    align-items: first baseline;
     gap: 5px;
 }
 
 .country-stat-item-title {
-    font-weight: 700;
+    font-weight: 800;
 }

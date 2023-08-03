@@ -2,8 +2,8 @@ import CountryCard from '../components/CountryCard'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronDown, faClose, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react'
-import { useLoaderData } from 'react-router-dom'
-import { Spinner, Select } from '@chakra-ui/react'
+import { useLoaderData, Link } from 'react-router-dom'
+import { Spinner } from '@chakra-ui/react'
 
 const regionsData = {
     africa: "Africa",
@@ -21,8 +21,9 @@ export async function loader(){
 
 export default function Home(){
     const [countriesData, setConutriesData] = useState(useLoaderData())
+    const [isCountriesLoading, setIsCountriesLoading] = useState(false)
     const [searchValue, setSearchValue] = useState("")
-    const [searchResults, setSearchResults] = useState([])
+    const [searchResults, setSearchResults] = useState(null)
     const [isRegionFilterOpened, setIsRegionFilterOpened] = useState(false)
     const [regionFilter, setRegionFilter] = useState('')
     const [isLoading, setIsLoading] = useState(false)
@@ -47,15 +48,14 @@ export default function Home(){
                 .then(res => res.ok ? res.json() : setSearchResults(["Nothing found"]))
                 .then(data => {
                     setIsLoading(false)
-                    setSearchResults(data.map(country => country.name.common))})
+                    setSearchResults(data.map(country => ({ name: country.name.common, code: country.cca3})))})
                 .catch(e => {
-                    
-                    return setSearchResults(["Nothing found"])})
+                    return setSearchResults([{name: "Nothing found", code: ""}])})
             }, 500)
         
             return () => clearTimeout(getData)
         }
-        else setSearchResults([])
+        else setSearchResults(null)
       }, [searchValue])
 
 
@@ -63,18 +63,35 @@ export default function Home(){
         if(searchValue != "")
             fetch(`https://restcountries.com/v3.1/name/${searchValue}`)
             .then(res => res.ok ? res.json() : setSearchResults(["Nothing found"]))
-            .then(data => setSearchResults(data.map(country => country.name.common)))
-            .catch(e => setSearchResults(["Nothing found"]))
+            .then(data => setSearchResults(data.map(country => ({ name: country.name.common, code: country.cca3}))))
+            .catch(e => setSearchResults([{name: "Nothing found", code: null}]))
     }
 
     function handleFocusOut(){
-        setSearchResults([])
+        const getData = setTimeout(() => {
+            setSearchResults(null)
+        }, 200)
     }
 
     useEffect(()=>{
-      if(regionFilter != '')
-        fetch(`https://restcountries.com/v3.1/region/${regionFilter}`).then(data => data.json()).then(body => setConutriesData(body))
-      else fetch('https://restcountries.com/v3.1/all').then(data => data.json()).then(body => setConutriesData(body))
+        if(regionFilter != ''){
+          setIsCountriesLoading(true)
+          fetch(`https://restcountries.com/v3.1/region/${regionFilter}`)
+          .then(data => data.json())
+          .then(body => {
+              setIsCountriesLoading(false)
+              setConutriesData(body)
+          })
+        }
+        else {
+            setIsCountriesLoading(true)
+            fetch('https://restcountries.com/v3.1/all')
+            .then(data => data.json())
+            .then(body =>{
+                setIsCountriesLoading(false)
+                setConutriesData(body)
+            })
+        }
     }, [regionFilter])
 
     function handleRegionSelect(e){
@@ -87,10 +104,13 @@ export default function Home(){
             <div className='search-wrapper'>
                 <FontAwesomeIcon icon={faMagnifyingGlass} className='search-icon'/>
                 <input className='search-input' type='text' placeholder='Search for a country...' value={searchValue} onChange={handleSearchInput} onFocus={handleOnFocus} onBlur={handleFocusOut}></input>
-                {searchResults.length > 0  && 
+                {searchResults  && 
                     <div className='search-results-wrapper'>
-                        {searchResults.map((countryName, i) => 
-                        <p className='search-result-item' key={i}>{countryName}</p>
+                        {searchResults.map((countryName, i) => {
+                            return countryName.code ?  
+                            <Link className='search-result-item' key={i} to={countryName.code}>{countryName.name}</Link> 
+                            : <p key={i} className='search-result-item'>{countryName.name}</p>
+                        }
                         )}
                     </div>
                 }
@@ -111,7 +131,13 @@ export default function Home(){
             </div>
             </div>
             <div className='main-content'>
-            {countriesData && countriesData.map((countryData, i) => <CountryCard key={i} {...countryData}/>)}
+                {   
+                    !countriesData || isCountriesLoading 
+                    ? <div className='loader-wrapper'><p>Countries loading....</p><Spinner thickness='2px'
+                    speed='0.8s'
+                    size='md' /></div>
+                    : countriesData.map((countryData, i) => <CountryCard key={i} {...countryData}/>)
+                }
             </div>
         </main>
     )
